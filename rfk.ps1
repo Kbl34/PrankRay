@@ -3,7 +3,7 @@ Set-ItemProperty -Path $Path -Name "HideIcons" -Value 1
 Get-Process "explorer"| Stop-Process
 
 
-$url = "https://raw.githubusercontent.com/Kbl34/PrankRay/07bedff7e702725b29ff6649158d82d541e02552/prank.png"
+$url = "https://raw.githubusercontent.com/Kbl34/PrankRay/refs/heads/main/prank.png"
 
 
 Invoke-WebRequest $url -OutFile C:\Users\Public\prank.png

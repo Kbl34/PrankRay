@@ -3,10 +3,10 @@ Set-ItemProperty -Path $Path -Name "HideIcons" -Value 1
 Get-Process "explorer"| Stop-Process
 
 
-$url = "https://raw.githubusercontent.com/Kbl34/FakeRansom/07bedff7e702725b29ff6649158d82d541e02552/ransom.png"
+$url = "https://raw.githubusercontent.com/Kbl34/PrankRay/07bedff7e702725b29ff6649158d82d541e02552/prank.png"
 
 
-Invoke-WebRequest $url -OutFile C:\Users\Public\lockbit.png
+Invoke-WebRequest $url -OutFile C:\Users\Public\prank.png
 
 
 $setwallpapersrc = @"
@@ -27,7 +27,7 @@ public class Wallpaper
 "@
 Add-Type -TypeDefinition $setwallpapersrc
 
-[Wallpaper]::SetWallpaper("C:\Users\Public\lockbit.png")
+[Wallpaper]::SetWallpaper("C:\Users\Public\prank.png")
 
 
 #Pop Up Message
@@ -65,4 +65,4 @@ if (!$image) {$image = "None"}
 
 }
 
-MsgBox -m 'Your computer is infected by Lockbit 3.0 ransomware' -t "Warning" -b OKCancel -i Warning
+MsgBox -m 'Your computer is infected by Ray ransomware' -t "Warning" -b OKCancel -i Warning

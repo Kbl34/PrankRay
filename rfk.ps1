@@ -31,6 +31,8 @@ Add-Type -TypeDefinition $setwallpapersrc
 
 
 #Pop Up Message
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
 
 function MsgBox {
 

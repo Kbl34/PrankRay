@@ -31,76 +31,44 @@ Add-Type -TypeDefinition $setwallpapersrc
 
 
 #Pop Up Message
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-$OutputEncoding = [System.Text.Encoding]::UTF8
-
-function MsgBox {
-
-[CmdletBinding()]
-param (	
-[Parameter (Mandatory = $True)]
-[Alias("m")]
-[string]$message,
-
-[Parameter (Mandatory = $False)]
-[Alias("t")]
-[string]$title
-)
-
 Add-Type -AssemblyName PresentationFramework
 
-if (!$title) {
-    $title = "Sensibilisation Cybersécurité"
-}
+$form = New-Object Windows.Window
+$form.Title = "Sensibilisation sécurité"
+$form.Width = 520
+$form.Height = 260
+$form.WindowStartupLocation = "CenterScreen"
+$form.ResizeMode = "NoResize"
+$form.Topmost = $true
 
-[xml]$xaml = @"
-<Window
- xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
- Title="$title"
- Height="260"
- Width="520"
- WindowStartupLocation="CenterScreen"
- ResizeMode="NoResize"
- Topmost="True">
+$stack = New-Object Windows.Controls.StackPanel
+$stack.Margin = "20"
 
-    <Grid Margin="20">
-        <StackPanel VerticalAlignment="Center">
+$title = New-Object Windows.Controls.TextBlock
+$title.Text = "⚠ Votre session est restée ouverte"
+$title.FontSize = 28
+$title.FontWeight = "Bold"
+$title.TextAlignment = "Center"
+$title.Margin = "0,0,0,20"
 
-            <TextBlock
-                Text="⚠ Votre session est restée ouverte"
-                FontFamily="Segoe UI"
-                FontSize="28"
-                FontWeight="Bold"
-                Margin="0,0,0,20"
-                TextAlignment="Center"/>
+$msg = New-Object Windows.Controls.TextBlock
+$msg.Text = "Pensez à verrouiller votre poste avec WIN + L"
+$msg.FontSize = 18
+$msg.TextAlignment = "Center"
+$msg.TextWrapping = "Wrap"
+$msg.Margin = "0,0,0,25"
 
-            <TextBlock
-                Text="$message"
-                FontSize="18"
-                TextAlignment="Center"
-                Margin="0,0,0,25"
-                TextWrapping="Wrap"/>
+$button = New-Object Windows.Controls.Button
+$button.Content = "Compris"
+$button.Width = 120
+$button.Height = 35
+$button.HorizontalAlignment = "Center"
 
-            <Button
-                Name="OKButton"
-                Content="Compris"
-                Width="120"
-                Height="35"
-                HorizontalAlignment="Center"/>
+$button.Add_Click({ $form.Close() })
 
-        </StackPanel>
-    </Grid>
-</Window>
-"@
+$stack.Children.Add($title)
+$stack.Children.Add($msg)
+$stack.Children.Add($button)
 
-$reader = New-Object System.Xml.XmlNodeReader $xaml
-$window = [Windows.Markup.XamlReader]::Load($reader)
-
-$button = $window.FindName("OKButton")
-$button.Add_Click({ $window.Close() })
-
-$window.ShowDialog() | Out-Null
-
-}
-
-MsgBox -m "Pensez à verrouiller votre poste avec WIN + L"
+$form.Content = $stack
+$form.ShowDialog() | Out-Null

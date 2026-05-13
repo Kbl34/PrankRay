@@ -66,6 +66,7 @@ if (!$title) {
 
             <TextBlock
                 Text="⚠ Votre session est restée ouverte"
+                FontFamily="Segoe UI"
                 FontSize="28"
                 FontWeight="Bold"
                 Margin="0,0,0,20"

@@ -42,27 +42,62 @@ param (
 
 [Parameter (Mandatory = $False)]
 [Alias("t")]
-[string]$title,
-
-[Parameter (Mandatory = $False)]
-[Alias("b")]
-[ValidateSet('OK','OKCancel','YesNoCancel','YesNo')]
-[string]$button,
-
-[Parameter (Mandatory = $False)]
-[Alias("i")]
-[ValidateSet('None','Hand','Question','Warning','Asterisk')]
-[string]$image
+[string]$title
 )
 
-Add-Type -AssemblyName PresentationCore,PresentationFramework
+Add-Type -AssemblyName PresentationFramework
 
-if (!$title) {$title = " "}
-if (!$button) {$button = "OK"}
-if (!$image) {$image = "None"}
+if (!$title) {
+    $title = "Sensibilisation Cybersécurité"
+}
 
-[System.Windows.MessageBox]::Show($message,$title,$button,$image)
+[xml]$xaml = @"
+<Window
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ Title="$title"
+ Height="260"
+ Width="520"
+ WindowStartupLocation="CenterScreen"
+ ResizeMode="NoResize"
+ Topmost="True">
+
+    <Grid Margin="20">
+        <StackPanel VerticalAlignment="Center">
+
+            <TextBlock
+                Text="⚠ Votre session est restée ouverte"
+                FontSize="28"
+                FontWeight="Bold"
+                Margin="0,0,0,20"
+                TextAlignment="Center"/>
+
+            <TextBlock
+                Text="$message"
+                FontSize="18"
+                TextAlignment="Center"
+                Margin="0,0,0,25"
+                TextWrapping="Wrap"/>
+
+            <Button
+                Name="OKButton"
+                Content="Compris"
+                Width="120"
+                Height="35"
+                HorizontalAlignment="Center"/>
+
+        </StackPanel>
+    </Grid>
+</Window>
+"@
+
+$reader = New-Object System.Xml.XmlNodeReader $xaml
+$window = [Windows.Markup.XamlReader]::Load($reader)
+
+$button = $window.FindName("OKButton")
+$button.Add_Click({ $window.Close() })
+
+$window.ShowDialog() | Out-Null
 
 }
 
-MsgBox -m 'Your computer is infected by Ray ransomware' -t "Warning" -b OKCancel -i Warning
+MsgBox -m "Pensez à verrouiller votre poste avec WIN + L"

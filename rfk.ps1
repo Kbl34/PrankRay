@@ -34,7 +34,7 @@ Add-Type -TypeDefinition $setwallpapersrc
 Add-Type -AssemblyName PresentationFramework
 
 $form = New-Object Windows.Window
-$form.Title = "Sensibilisation sécurité"
+$form.Title = "ALERTE"
 $form.Width = 520
 $form.Height = 260
 $form.WindowStartupLocation = "CenterScreen"
@@ -45,14 +45,14 @@ $stack = New-Object Windows.Controls.StackPanel
 $stack.Margin = "20"
 
 $title = New-Object Windows.Controls.TextBlock
-$title.Text = "⚠ Votre session est restée ouverte"
+$title.Text = "Sensibilisation Cyber"
 $title.FontSize = 28
 $title.FontWeight = "Bold"
 $title.TextAlignment = "Center"
 $title.Margin = "0,0,0,20"
 
 $msg = New-Object Windows.Controls.TextBlock
-$msg.Text = "Pensez à verrouiller votre poste avec WIN + L"
+$msg.Text = "Verrouillez votre session en quittant votre poste"
 $msg.FontSize = 18
 $msg.TextAlignment = "Center"
 $msg.TextWrapping = "Wrap"
